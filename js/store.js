@@ -1,5 +1,5 @@
 // All data lives on the phone: app state in localStorage, machine photos in IndexedDB.
-import { DEFAULT_TARGETS, EXERCISES, WORKOUTS } from "./data.js";
+import { BLOCK_WEEKS, DEFAULT_TARGETS, EXERCISES, ORDER, WORKOUTS } from "./data.js";
 
 const KEY = "forge.v1";
 
@@ -82,16 +82,44 @@ export function uid() {
 }
 
 // ---------- workouts ----------
+// Workouts run in a fixed order (Legs 1 → Upper 1 → Legs 2 → Upper 2), whatever the day.
 export function nextWorkoutKey() {
   const last = state.sessions[state.sessions.length - 1];
-  if (!last) return "A";
-  return last.workout === "A" ? "B" : "A";
+  if (!last) return ORDER[0];
+  const i = ORDER.indexOf(last.workout);
+  return ORDER[(i + 1) % ORDER.length]; // an unknown key (i = -1) restarts at the first workout
 }
 
-// Which exercise fills a slot this week: alternates swap on odd ISO weeks.
+function mondayOf(d) {
+  const m = new Date(d);
+  m.setHours(0, 0, 0, 0);
+  m.setDate(m.getDate() - ((m.getDay() + 6) % 7));
+  return m;
+}
+
+// The program starts the week of the first workout. Every BLOCK_WEEKS weeks a new block begins,
+// and slots with an `alt` swap exercises.
+export function blockInfo(d = new Date()) {
+  const first = state.sessions[0];
+  const start = mondayOf(first ? parseKey(first.date) : d);
+  const weeks = Math.max(0, Math.round((mondayOf(d) - start) / (7 * 86400000)));
+  const block = Math.floor(weeks / BLOCK_WEEKS);
+  const nextSwap = new Date(start);
+  nextSwap.setDate(start.getDate() + (block + 1) * BLOCK_WEEKS * 7);
+  const today = new Date(d);
+  today.setHours(0, 0, 0, 0);
+  return {
+    block,
+    week: weeks + 1,
+    weekInBlock: (weeks % BLOCK_WEEKS) + 1,
+    daysToSwap: Math.round((nextSwap - today) / 86400000),
+  };
+}
+
+// Which exercise fills a slot right now: the main one in odd blocks (1, 3, …), the alternate in even ones.
 export function defaultPick(slot, d = new Date()) {
   if (!slot.alt) return slot.ex;
-  return isoWeek(d) % 2 === 0 ? slot.ex : slot.alt;
+  return blockInfo(d).block % 2 === 0 ? slot.ex : slot.alt;
 }
 
 export function startSession(workoutKey) {

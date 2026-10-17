@@ -1,5 +1,5 @@
 // Offline support. Bump CACHE whenever any app file changes, or phones keep the old version.
-const CACHE = "forge-1.2.0";
+const CACHE = "forge-1.3.0";
 const ASSETS = [
   "./",
   "index.html",

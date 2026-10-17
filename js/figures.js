@@ -279,6 +279,147 @@ const FIG = {
     back: () => ground() + box(110, 112, 58, G + 2 - 112, "eq-fill", 4),
   },
 
+  // ---------- core ----------
+  plank: {
+    poses: [
+      { hip: [92, 114], torso: -6, legs: [{ thigh: 167, shin: 167, foot: 100 }], arms: [{ up: 90, fore: 0 }] },
+      { hip: [92, 113], torso: -6.5, legs: [{ thigh: 166.5, shin: 167, foot: 100 }], arms: [{ up: 90, fore: 0 }] },
+    ],
+    move: 2, hold: 0.6,
+    back: () => ground() + box(16, 139, 188, 3, "eq-fill", 1),
+    front: (j) => {
+      // Dashed line: head to heels should stay straight.
+      const len = Math.hypot(j.H[0] - j.A1[0], j.H[1] - j.A1[1]);
+      const a = off(j.A1, j.H, -4, -13);
+      const b = off(j.A1, j.H, len + 6, -13);
+      return ln(a[0], a[1], b[0], b[1], "guide");
+    },
+  },
+
+  "dead-bug": {
+    poses: [
+      { hip: [112, 131], torso: 180, legs: [{ thigh: -90, shin: 0, foot: -70 }, { thigh: -90, shin: 0, foot: -70 }], arms: [{ up: -90, fore: -90 }, { up: -90, fore: -90 }] },
+      { hip: [112, 131], torso: 180, legs: [{ thigh: -90, shin: 0, foot: -70 }, { thigh: -4, shin: -2, foot: -80 }], arms: [{ up: -155, fore: -155 }, { up: -90, fore: -90 }] },
+    ],
+    back: () => ground() + box(24, 139, 172, 3, "eq-fill", 1),
+  },
+
+  "cable-crunch": {
+    poses: [
+      { hip: [92, 102], torso: -86, legs: [{ ankle: [60, 136], bend: -1, foot: 180 }], arms: [{ rel: [4, -12], bend: 1 }] },
+      { hip: [92, 102], torso: 22, legs: [{ ankle: [60, 136], bend: -1, foot: 180 }], arms: [{ rel: [12, -6], bend: 1 }] },
+    ],
+    back: () => ground() + box(172, 4, 16, G - 2, "eq-fill", 4) + ring([170, 12], 5, "eq"),
+    front: (j) => ln(170, 12, j.W1[0], j.W1[1], "cable") + ln(j.W1[0], j.W1[1] - 6, j.W1[0], j.W1[1] + 6, "mv", 5),
+  },
+
+  // ---------- upper body ----------
+  "incline-db-press": {
+    poses: [
+      { hip: [100, 106], torso: -150, legs: [{ ankle: [126, 135], bend: -1 }], arms: [{ rel: [10, -10], bend: 1 }] },
+      { hip: [100, 106], torso: -150, legs: [{ ankle: [126, 135], bend: -1 }], arms: [{ rel: [8, -44], bend: 1 }] },
+    ],
+    back: (j) => {
+      const a = off(j.P, j.S, -8, -11);
+      const b = off(j.P, j.S, 50, -11);
+      return ground() + ln(a[0], a[1], b[0], b[1], "eq", 7) + box(86, 112, 34, 6) + ln(108, 118, 108, G + 2) + ln(66, 108, 66, G + 2);
+    },
+    front: (j) => box(j.W1[0] - 8, j.W1[1] - 3, 16, 7, "mv-fill", 3),
+  },
+
+  "one-arm-db-row": {
+    poses: [
+      { hip: [78, 73], torso: -3, legs: [{ ankle: [90, 133], bend: -1 }, { ankle: [48, 106], bend: -1, foot: 180 }], arms: [{ rel: [2, 45], bend: 1 }, { hand: [116, 110], bend: 1 }] },
+      { hip: [78, 73], torso: -3, legs: [{ ankle: [90, 133], bend: -1 }, { ankle: [48, 106], bend: -1, foot: 180 }], arms: [{ rel: [-18, 14], bend: 1 }, { hand: [116, 110], bend: 1 }] },
+    ],
+    back: () => ground() + box(36, 112, 92, 6) + ln(46, 118, 46, G + 2) + ln(118, 118, 118, G + 2),
+    front: (j) => box(j.W1[0] - 8, j.W1[1] - 3, 16, 7, "mv-fill", 3),
+  },
+
+  "lateral-raise": {
+    at(t) {
+      const k = 0.5 - 0.5 * Math.cos(t * Math.PI * 2);
+      const S1 = [94, 38];
+      const S2 = [126, 38];
+      const a = 97 + 78 * k; // viewer-left arm: hanging → out to the side
+      const b = 83 - 78 * k;
+      const E1 = add(S1, vec(a, L.up));
+      const E2 = add(S2, vec(b, L.up));
+      return {
+        pts: {
+          H: [110, 20], S1, S2, P1: [99, 86], P2: [121, 86],
+          E1, W1: add(E1, vec(a - 5, L.fore)), E2, W2: add(E2, vec(b + 5, L.fore)),
+          K1: [101, 110], K2: [119, 110], A1: [101, 134], A2: [119, 134],
+        },
+      };
+    },
+    period: 3.2,
+    back: () => ground(),
+    front: (j) => dot(j.W1, 6) + dot(j.W2, 6),
+  },
+
+  // Front view: a side view can't show elbows flaring out to the sides.
+  "face-pull": {
+    poses: [
+      { pts: frontPts({ E1: [97, 56], W1: [104, 46], E2: [123, 56], W2: [116, 46] }) },
+      { pts: frontPts({ E1: [72, 34], W1: [90, 16], E2: [148, 34], W2: [130, 16] }) },
+    ],
+    back: () => ground(),
+    front: (j) => {
+      const knot = [110, (j.W1[1] + j.W2[1]) / 2 + 8];
+      return `<polyline class="mv" points="${[j.W1, knot, j.W2].map((p) => p.map(f1).join(",")).join(" ")}"/>` + dot(knot, 3.5, "eq-fill");
+    },
+  },
+
+  "triceps-pushdown": {
+    poses: [
+      { hip: [94, 72], torso: -84, legs: [{ ankle: [100, 135], bend: -1 }, { ankle: [86, 135], bend: -1 }], arms: [{ up: 96, fore: -8 }] },
+      { hip: [94, 72], torso: -84, legs: [{ ankle: [100, 135], bend: -1 }, { ankle: [86, 135], bend: -1 }], arms: [{ up: 96, fore: 86 }] },
+    ],
+    back: () => ground() + box(152, 4, 18, G - 2, "eq-fill", 4) + ring([150, 12], 5, "eq"),
+    front: (j) => ln(150, 12, j.W1[0], j.W1[1], "cable") + ln(j.W1[0] - 2, j.W1[1] - 6, j.W1[0] + 2, j.W1[1] + 6, "mv", 5),
+  },
+
+  "ez-curl": {
+    poses: curlPoses(),
+    back: () => ground(),
+    front: (j) => ring(j.W1, 8) + dot(j.W1, 3),
+  },
+
+  "hammer-curl": {
+    poses: curlPoses(),
+    back: () => ground(),
+    front: (j) => box(j.W1[0] - 4, j.W1[1] - 8, 8, 16, "mv-fill", 3),
+  },
+
+  // ---------- legs and cardio ----------
+  "goblet-squat": {
+    poses: [
+      { hip: [100, 72], torso: -88, legs: [{ ankle: [104, 135], bend: -1 }], arms: [{ rel: [12, 16], bend: 1 }] },
+      { hip: [84, 106], torso: -64, legs: [{ ankle: [104, 135], bend: -1 }], arms: [{ rel: [14, 14], bend: 1 }] },
+    ],
+    back: () => ground(),
+    front: (j) => ring(add(j.W1, [3, -5]), 4, "mv") + dot(add(j.W1, [3, 4]), 8, "mv-fill"),
+  },
+
+  elliptical: {
+    at(t) {
+      const a = rad(t * 360);
+      const C = [104, 119];
+      return {
+        hip: [104, 58], torso: -86,
+        legs: [
+          { ankle: [C[0] + 16 * Math.cos(a), C[1] + 4 * Math.sin(a)], bend: -1, foot: 0 },
+          { ankle: [C[0] - 16 * Math.cos(a), C[1] - 4 * Math.sin(a)], bend: -1, foot: 0 },
+        ],
+        arms: [{ hand: [124 - 8 * Math.cos(a), 50], bend: 1 }, { hand: [124 + 8 * Math.cos(a), 50], bend: 1 }],
+      };
+    },
+    period: 1.4,
+    back: (j) => ground() + ln(70, 132, 166, 132, "eq", 5) + ln(162, 132, 152, 40, "eq", 6) + box(140, 32, 24, 8) + ln(j.W2[0], j.W2[1], 156, 100, "eq", 4) + box(j.A2[0] - 5, j.A2[1] + 4, 20, 4, "eq-fill", 2),
+    front: (j) => ln(j.W1[0], j.W1[1], 156, 100, "mv", 4) + box(j.A1[0] - 5, j.A1[1] + 4, 20, 4, "mv-fill", 2),
+  },
+
   "hip-abductor": frontLegs(true),
   "hip-adductor": frontLegs(false),
 
@@ -349,6 +490,22 @@ const FIG = {
     },
   },
 };
+
+// Standing front-view body; pass the arm points.
+function frontPts(arms) {
+  return {
+    H: [110, 20], S1: [94, 38], S2: [126, 38], P1: [99, 86], P2: [121, 86],
+    K1: [101, 110], K2: [119, 110], A1: [101, 134], A2: [119, 134], ...arms,
+  };
+}
+
+function curlPoses() {
+  const legs = [{ ankle: [104, 135], bend: -1 }, { ankle: [96, 135], bend: -1 }];
+  return [
+    { hip: [100, 72], torso: -90, legs, arms: [{ up: 93, fore: 88 }] },
+    { hip: [100, 72], torso: -90, legs, arms: [{ up: 96, fore: -62 }] },
+  ];
+}
 
 // Hip abductor / adductor: front view, knees opening or closing against pads.
 function frontLegs(abduct) {

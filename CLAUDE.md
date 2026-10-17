@@ -4,7 +4,7 @@ Single-user fitness tracker for one person (the repo owner). Installed as a home
 
 ## Goal the app serves
 
-Fat loss while keeping muscle. Everything should serve one loop: train → log food → check the weight trend → rescan monthly. Body fat % is the headline number. Don't add features that don't serve that loop.
+Fat loss while building muscle (body recomposition), with visible abs as the long-term goal. Everything should serve one loop: train → log food → check the weight trend → rescan monthly. Body fat % is the headline number. Don't add features that don't serve that loop.
 
 ## The gym
 
@@ -44,7 +44,7 @@ Views are functions returning `[html, ctaHtml]`. `render()` re-renders the whole
 {
   v: 1,
   targets: { kcal, protein, steps, sleep, sessionsPerWeek },
-  sessions: [ { id, date: "YYYY-MM-DD", workout: "A"|"B", startedAt, finishedAt,
+  sessions: [ { id, date: "YYYY-MM-DD", workout: "A"|"B"|"C"|"D", startedAt, finishedAt,
                 picks: { slotId: exerciseId }, finisherEx,
                 entries: { exerciseId: { sets: [ { w, r, s, done } ] } | { done, minutes } } } ],
   active: <same shape as a session, without finishedAt> | null,
@@ -60,8 +60,9 @@ If you change the shape, bump `v`, migrate in `load()` in `store.js`, and keep o
 
 ## Training logic
 
-- Rotation: next workout is the opposite of the last finished one (`nextWorkoutKey`).
-- Slots with `alt` swap by ISO week parity (even = primary); the user can swap manually before logging.
+- Four-day split in `ORDER`: A Legs 1, B Upper 1, C Legs 2, D Upper 2. The next workout follows the last finished one, whatever the day (`nextWorkoutKey`). Every workout ends with abs.
+- Rotation blocks: `BLOCK_WEEKS` (4) weeks, counted from the Monday of the first workout (`blockInfo`). Slots with `alt` use the main exercise in odd blocks and the alternate in even blocks; the user can swap by hand before logging. Swap exercises no more often than this, or progress can't be tracked.
+- Slot ids (A1, B3, …) are never reused for a different exercise; `sessionOrder` falls back to `defaultPick` for ids a stored session doesn't know.
 - Progression (`suggestion`): double progression. If every set at the top weight hit `repMax`, suggest `+inc`. Time holds add `incSec`; bodyweight reps add 1.
 - Weight conventions: Smith machine = plates added (empty bar = 0); dumbbells = kg per dumbbell; machines = the stack number. These are shown on screen via `weightNote`.
 

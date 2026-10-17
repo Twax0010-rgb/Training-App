@@ -273,6 +273,7 @@ body.timer-on .sticky-cta { bottom: calc(var(--tabbar-h) + var(--safe-b) + 72px)
 .fig .mv { stroke: var(--accent); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; fill: none; }
 .fig .mv-fill { fill: var(--accent); }
 .fig .cable { stroke: var(--text-2); stroke-width: 1.5; opacity: 0.8; }
+.fig .guide { stroke: var(--accent); stroke-width: 2; stroke-dasharray: 4 5; opacity: 0.8; }
 .paused .fig { opacity: 0.85; }
 
 /* ---------- rest timer ---------- */

@@ -12,7 +12,7 @@ A personal gym, food and progress tracker, built around one gym and one plan. It
 
 ## What it does
 
-- **Today:** picks Workout A or B automatically (whichever you didn't do last). Each exercise has an animated demo, a form guide, a slot for your own photo of the machine, a set logger pre-filled with last session's numbers, and a rest timer. When you hit every target, it tells you to go up in weight.
+- **Today:** offers the next workout in a four-day rotation (Legs 1, Upper 1, Legs 2, Upper 2), each ending with abs. Some exercises swap every 4 weeks for variety. Each exercise has an animated demo, a form guide, a slot for your own photo of the machine, a set logger pre-filled with last session's numbers, and a rest timer. When you hit every target, it tells you to go up in weight.
 - **Log:** calories and protein against your daily targets, with one-tap re-adding of meals you eat often. Also weight, steps and sleep.
 - **Progress:** weight trend as a 7-day average, body scan history with body fat chart, and strength charts per exercise.
 - **Plan:** the weekly split, both workouts, your targets, and backup/restore.

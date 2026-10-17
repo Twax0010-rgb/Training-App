@@ -1,9 +1,9 @@
 import * as S from "./store.js";
-import { EXERCISES, WORKOUTS, targetText } from "./data.js";
+import { EXERCISES, ORDER, WORKOUTS, BLOCK_WEEKS, targetText } from "./data.js";
 import { lineChart } from "./charts.js";
 import { figureMarkup, startFigures } from "./figures.js";
 
-const VERSION = "1.2.0";
+const VERSION = "1.3.0";
 const view = document.getElementById("view");
 const ctaRoot = document.getElementById("cta-root");
 
@@ -77,6 +77,8 @@ function confirmDialog(title, body, okLabel = "OK", danger = false) {
 }
 
 // ---------- session helpers ----------
+const wName = (key) => (WORKOUTS[key] ? WORKOUTS[key].name : `Workout ${key}`);
+const wShort = (key) => (WORKOUTS[key] ? WORKOUTS[key].short : key);
 function sessionOrder(a) {
   const w = WORKOUTS[a.workout];
   // `|| defaultPick` keeps a workout started on an older version working after the plan changes.
@@ -326,7 +328,7 @@ function todayView() {
 
   if (doneToday.length && !a) {
     const s = doneToday[doneToday.length - 1];
-    html += `<div class="hint good" style="margin-bottom:var(--s-3)">${I.check}<div><strong>${esc(WORKOUTS[s.workout].name)} done today.</strong> Rest up. Next time is ${esc(WORKOUTS[S.nextWorkoutKey()].name)}.</div></div>`;
+    html += `<div class="hint good" style="margin-bottom:var(--s-3)">${I.check}<div><strong>${esc(wName(s.workout))} done today.</strong> Rest up. Next time is ${esc(wName(S.nextWorkoutKey()))}.</div></div>`;
   }
 
   html += `<a class="today-strip" href="#/log" style="text-decoration:none;color:inherit" aria-label="Today's food: ${Math.round(totals.kcal)} of ${t.kcal} calories, ${Math.round(totals.protein)} of ${t.protein} grams protein">
@@ -341,8 +343,7 @@ function todayView() {
 
   if (!a) {
     html += `<div class="seg" role="group" aria-label="Choose workout" style="margin-bottom:var(--s-3)">
-      <button data-action="pick-workout" data-w="A" aria-pressed="${key === "A"}">Workout A</button>
-      <button data-action="pick-workout" data-w="B" aria-pressed="${key === "B"}">Workout B</button>
+      ${ORDER.map((k) => `<button data-action="pick-workout" data-w="${k}" aria-pressed="${key === k}">${esc(WORKOUTS[k].name)}</button>`).join("")}
     </div>`;
   }
 
@@ -607,7 +608,7 @@ function logView() {
   </div>`;
 
   if (gym.length) {
-    html += `<div class="hint good" style="margin-top:var(--s-3)">${I.check}<div><strong>Gym:</strong> ${gym.map((s) => esc(WORKOUTS[s.workout].name)).join(", ")} done.</div></div>`;
+    html += `<div class="hint good" style="margin-top:var(--s-3)">${I.check}<div><strong>Gym:</strong> ${gym.map((s) => esc(wName(s.workout))).join(", ")} done.</div></div>`;
   }
   return [html, ""];
 }
@@ -743,7 +744,7 @@ function progressView() {
       .map((s) => {
         const mins = s.finishedAt && s.startedAt ? Math.round((s.finishedAt - s.startedAt) / 60000) : null;
         const n = Object.values(s.entries || {}).reduce((acc, e) => acc + (e.sets ? e.sets.filter((x) => x.done).length : 0), 0);
-        return `<div class="row"><span class="badge done">${esc(s.workout)}</span><div class="row-main"><div class="row-title">${esc(dayLabel(s.date))}</div>
+        return `<div class="row"><span class="badge done" style="font-size:var(--f-xs)">${esc(wShort(s.workout))}</span><div class="row-main"><div class="row-title">${esc(dayLabel(s.date))}</div>
         <div class="row-sub">${n} sets${mins ? ` · ${mins} min` : ""}</div></div></div>`;
       })
       .join("")}</div>`;
@@ -754,24 +755,34 @@ function progressView() {
 // ---------- PLAN ----------
 function planView() {
   const t = S.state.targets;
+  const blk = S.blockInfo();
   const week = [
-    ["Saturday", "Workout A"],
-    ["Sunday", "Workout B"],
-    ["Weekday 1", "Workout A"],
-    ["Weekday 2", "Workout B"],
-    ["Extra weekday", "30–40 min incline walk (optional)"],
+    ["Saturday", "Legs 1"],
+    ["Sunday", "Upper 1"],
+    ["Weekday 1", "Legs 2"],
+    ["Weekday 2", "Upper 2"],
+    ["Extra day", "Walk + plank (optional)"],
   ];
-  let html = `<header class="page-head"><p class="eyebrow">Plan</p><h1>Your week</h1><p>Today's screen picks A or B for you: whichever you didn't do last.</p></header>
-  <div class="list">${week.map(([d, w]) => `<div class="row" style="min-height:56px"><div class="row-main"><div class="row-title">${d}</div></div><div class="muted" style="font-size:var(--f-sm);text-align:right">${w}</div></div>`).join("")}</div>`;
+  let html = `<header class="page-head"><p class="eyebrow">Plan</p><h1>Your week</h1><p>Today's screen always offers the next workout in order, whatever the day.</p></header>
+  <div class="list">${week.map(([d, w]) => `<div class="row" style="min-height:56px"><div class="row-main"><div class="row-title">${d}</div></div><div class="muted" style="font-size:var(--f-sm);text-align:right">${w}</div></div>`).join("")}</div>
 
-  for (const key of ["A", "B"]) {
+  <div class="card" style="margin-top:var(--s-3)">
+    <div class="stat-label">Rotation</div>
+    <div style="font-size:var(--f-lg);font-weight:700;margin-top:var(--s-1)">Block ${blk.block + 1} · week ${blk.weekInBlock} of ${BLOCK_WEEKS}</div>
+    <p class="muted" style="font-size:var(--f-sm);margin:var(--s-1) 0 0">Some exercises swap every ${BLOCK_WEEKS} weeks, so your muscles get something new while you still have time to add weight. Next swap in ${blk.daysToSwap} day${blk.daysToSwap === 1 ? "" : "s"}.</p>
+  </div>
+  <div class="hint" style="margin-top:var(--s-3)">${I.spark}<div><strong>About abs:</strong> every workout trains them, but they only show once body fat comes down. Training builds them; the food log is what uncovers them.</div></div>`;
+
+  for (const key of ORDER) {
     const w = WORKOUTS[key];
     html += `<h2>${esc(w.name)} <span class="muted" style="font-size:var(--f-sm);font-weight:600">· ${esc(w.focus)}</span></h2><div class="list">`;
     const rows = [{ ex: w.warmup }, ...w.slots, w.finisher];
     rows.forEach((s) => {
-      const ex = EXERCISES[s.ex];
-      html += `<a class="row" href="#/ex/${s.ex}?from=plan"><div class="row-main"><div class="row-title">${esc(ex.name)}</div>
-        <div class="row-sub">${esc(ex.type === "cardio" ? ex.target : targetText(ex))}${s.alt ? ` · alternates with ${esc(EXERCISES[s.alt].name)}` : ""}</div></div>${I.chev}</a>`;
+      const now = S.defaultPick(s);
+      const ex = EXERCISES[now];
+      const other = s.alt ? (now === s.ex ? s.alt : s.ex) : null;
+      html += `<a class="row" href="#/ex/${now}?from=plan"><div class="row-main"><div class="row-title">${esc(ex.name)}</div>
+        <div class="row-sub">${esc(ex.type === "cardio" ? ex.target : targetText(ex))}${other ? ` · next block: ${esc(EXERCISES[other].name)}` : ""}</div></div>${I.chev}</a>`;
     });
     html += `</div>`;
   }

@@ -15,7 +15,7 @@ export const EXERCISES = {
     mistakes: ["Going hard here and starting the lifts tired"],
   },
 
-  // ---------- Workout A ----------
+  // ---------- Exercises ----------
   "smith-squat": {
     name: "Smith machine squat",
     type: "weight",
@@ -171,8 +171,8 @@ export const EXERCISES = {
   "incline-walk": {
     name: "Incline walk",
     type: "cardio",
-    minutes: 20,
-    target: "20 min · 5–8% incline",
+    minutes: 15,
+    target: "15 min · 5–8% incline",
     where: "Treadmill",
     setup: ["Set the treadmill to a 5–8% incline and 5–6 km/h."],
     movement: [
@@ -182,7 +182,6 @@ export const EXERCISES = {
     mistakes: ["Leaning back and hanging off the rails", "Going so fast you have to hold on"],
   },
 
-  // ---------- Workout B ----------
   "db-rdl": {
     name: "Dumbbell Romanian deadlift",
     type: "weight",
@@ -262,7 +261,7 @@ export const EXERCISES = {
   "hip-abductor": {
     name: "Hip abductor",
     type: "weight",
-    sets: 3, repMin: 12, repMax: 15, rest: 60, inc: 5,
+    sets: 2, repMin: 12, repMax: 15, rest: 60, inc: 5,
     where: "Abductor/adductor machine",
     setup: [
       "Sit with your back against the pad.",
@@ -278,7 +277,7 @@ export const EXERCISES = {
   "hip-adductor": {
     name: "Hip adductor",
     type: "weight",
-    sets: 3, repMin: 12, repMax: 15, rest: 60, inc: 5,
+    sets: 2, repMin: 12, repMax: 15, rest: 60, inc: 5,
     where: "Abductor/adductor machine",
     setup: [
       "Same machine as the abductor: switch the pads to the inside of your knees.",
@@ -341,14 +340,14 @@ export const EXERCISES = {
   "rower-intervals": {
     name: "Rower intervals",
     type: "cardio",
-    minutes: 16,
-    target: "8 rounds · 30s hard / 90s easy",
+    minutes: 12,
+    target: "6 rounds · 30s hard / 90s easy",
     where: "Air rower",
     setup: ["Strap your feet in and set the damper between 3 and 5."],
     movement: [
       "Each stroke: push with your legs, lean back slightly, then pull with your arms.",
       "Return in reverse: arms, body, then legs.",
-      "Row hard for 30 seconds, then easy for 90 seconds. Repeat 8 times.",
+      "Row hard for 30 seconds, then easy for 90 seconds. Repeat 6 times.",
     ],
     mistakes: ["Pulling with your arms first", "Hunching your back"],
   },
@@ -365,40 +364,286 @@ export const EXERCISES = {
     ],
     mistakes: ["Standing straight-legged", "Using only your wrists instead of your whole arms"],
   },
+  // ---------- Core ----------
+  plank: {
+    name: "Plank",
+    type: "time",
+    sets: 3, secMin: 30, secMax: 45, rest: 45, incSec: 5,
+    where: "Floor mat",
+    setup: [
+      "Forearms on the floor, elbows under your shoulders.",
+      "Step your feet back so your body is one straight line from head to heels.",
+    ],
+    movement: [
+      "Squeeze your glutes and brace your stomach as if someone is about to poke it.",
+      "Breathe steadily and hold.",
+      "Stop the set when your hips start to sag.",
+    ],
+    mistakes: ["Hips sagging toward the floor", "Bottom pushed up high", "Holding your breath"],
+    tip: "Quality beats time. 20 solid seconds is better than 45 sagging ones.",
+  },
+  "dead-bug": {
+    name: "Dead bug",
+    type: "reps",
+    sets: 2, repMin: 6, repMax: 10, rest: 45, perSide: true,
+    where: "Floor mat",
+    setup: [
+      "Lie on your back with your knees bent at 90 degrees above your hips.",
+      "Point both arms straight at the ceiling.",
+      "Press your lower back flat into the floor.",
+    ],
+    movement: [
+      "Slowly lower one arm back behind your head while you straighten the opposite leg toward the floor.",
+      "Stop just before your lower back lifts, then bring them back.",
+      "Switch sides. One rep is both sides.",
+    ],
+    mistakes: ["Lower back arching off the floor", "Rushing the reps", "Holding your breath"],
+    tip: "Slow is the point. Breathe out as you reach.",
+  },
+  "cable-crunch": {
+    name: "Cable crunch",
+    type: "weight",
+    sets: 3, repMin: 12, repMax: 15, rest: 60, inc: 5,
+    where: "Cable tower, top pulley + rope",
+    setup: [
+      "Clip a rope to the top pulley of the cable tower.",
+      "Kneel facing the tower and hold the rope ends beside your head.",
+    ],
+    movement: [
+      "Crunch down by curling your chest toward your knees. Use your abs, not your arms.",
+      "Squeeze for a second at the bottom.",
+      "Come back up slowly until your back is upright.",
+    ],
+    mistakes: ["Sitting back onto your heels to move the weight", "Pulling with your arms", "Going too heavy"],
+    tip: "Keep your hips still. Only your spine should move.",
+  },
+
+  // ---------- Upper body ----------
+  "incline-db-press": {
+    name: "Incline dumbbell press",
+    type: "weight",
+    sets: 3, repMin: 8, repMax: 10, rest: 90, inc: 2,
+    where: "Adjustable bench + dumbbells",
+    weightNote: "kg per dumbbell",
+    setup: [
+      "Set the adjustable bench to a low incline, about 30 degrees.",
+      "Sit with a dumbbell on each thigh, then lie back and bring them up beside your chest.",
+      "Keep your feet flat on the floor.",
+    ],
+    movement: [
+      "Press the dumbbells up over your upper chest until your arms are almost straight.",
+      "Lower slowly until they're beside your chest and you feel a stretch.",
+      "Keep your elbows at about 45 degrees from your body.",
+    ],
+    mistakes: ["Bench set too steep (that turns it into a shoulder press)", "Bouncing at the bottom", "Flaring your elbows straight out"],
+  },
+  "one-arm-db-row": {
+    name: "One-arm dumbbell row",
+    type: "weight",
+    sets: 3, repMin: 10, repMax: 12, rest: 60, inc: 2, perSide: true,
+    where: "Flat bench + dumbbell",
+    weightNote: "kg per dumbbell",
+    setup: [
+      "Put one knee and the same-side hand on a flat bench, with your back flat.",
+      "Other foot on the floor, the dumbbell in your free hand hanging straight down.",
+    ],
+    movement: [
+      "Pull the dumbbell up toward your hip, driving your elbow back.",
+      "Squeeze your shoulder blade for a second at the top.",
+      "Lower slowly until your arm is straight. Do all your reps, then switch sides.",
+    ],
+    mistakes: ["Twisting your body to swing the weight up", "Rounding your back", "Pulling toward your shoulder instead of your hip"],
+  },
+  "lateral-raise": {
+    name: "Dumbbell lateral raise",
+    type: "weight",
+    sets: 3, repMin: 12, repMax: 15, rest: 60, inc: 2,
+    where: "Dumbbell rack",
+    weightNote: "kg per dumbbell",
+    setup: [
+      "Stand tall with a light dumbbell in each hand at your sides.",
+      "Bend your elbows very slightly and keep them that way.",
+    ],
+    movement: [
+      "Raise your arms out to the sides until your hands reach shoulder height.",
+      "Lead with your elbows.",
+      "Lower slowly over 2–3 seconds.",
+    ],
+    mistakes: ["Swinging the weights up with your body", "Shrugging your shoulders", "Lifting above shoulder height"],
+    tip: "Go light. This is a small muscle, and strict reps with light dumbbells beat swinging heavy ones.",
+  },
+  "face-pull": {
+    name: "Face pull",
+    type: "weight",
+    sets: 3, repMin: 12, repMax: 15, rest: 60, inc: 5,
+    where: "Cable tower + rope",
+    setup: [
+      "Set a pulley on the cable tower to about head height and clip on the rope.",
+      "Hold the rope ends, step back until your arms are straight, feet hip-width.",
+    ],
+    movement: [
+      "Pull the rope toward your face, splitting the ends apart beside your ears.",
+      "Squeeze between your shoulder blades for a second.",
+      "Return slowly until your arms are straight.",
+    ],
+    mistakes: ["Leaning back to move the weight", "Pulling down to your chest instead of up to your face", "Going too heavy"],
+    tip: "This one is for posture and the back of your shoulders. Keep it light and strict.",
+  },
+  "triceps-pushdown": {
+    name: "Triceps pushdown",
+    type: "weight",
+    sets: 3, repMin: 10, repMax: 12, rest: 60, inc: 5,
+    where: "Cable tower, top pulley",
+    setup: [
+      "Clip a rope or short bar to the top pulley.",
+      "Stand close, facing the tower, with a slight forward lean.",
+      "Tuck your elbows against your sides.",
+    ],
+    movement: [
+      "Push the handle down until your arms are straight.",
+      "Squeeze the back of your arms for a second.",
+      "Let it come back up slowly until your forearms are about level with the floor. Your elbows stay pinned.",
+    ],
+    mistakes: ["Elbows drifting forward", "Leaning over the weight to push it", "Letting the weight yank your arms up"],
+  },
+  "ez-curl": {
+    name: "EZ-bar curl",
+    type: "weight",
+    sets: 3, repMin: 10, repMax: 12, rest: 60, inc: 5,
+    where: "EZ curl bar",
+    weightNote: "Plates added (empty bar = 0)",
+    setup: [
+      "Hold the EZ bar on the angled grips, palms up, arms straight in front of your thighs.",
+      "Stand tall with your elbows tucked against your sides.",
+    ],
+    movement: [
+      "Curl the bar up toward your chest by bending only at the elbows.",
+      "Squeeze your biceps for a second at the top.",
+      "Lower slowly until your arms are straight.",
+    ],
+    mistakes: ["Swinging your body to lift the bar", "Elbows drifting forward", "Dropping the bar fast on the way down"],
+  },
+  "hammer-curl": {
+    name: "Hammer curl",
+    type: "weight",
+    sets: 3, repMin: 10, repMax: 12, rest: 60, inc: 2,
+    where: "Dumbbell rack",
+    weightNote: "kg per dumbbell",
+    setup: [
+      "Stand tall with a dumbbell in each hand, palms facing your thighs.",
+      "Tuck your elbows against your sides.",
+    ],
+    movement: [
+      "Curl both dumbbells up, keeping your palms facing each other.",
+      "Squeeze at the top for a second.",
+      "Lower slowly until your arms are straight.",
+    ],
+    mistakes: ["Swinging your body", "Elbows drifting forward", "Dropping the weights fast"],
+  },
+
+  // ---------- Legs and cardio ----------
+  "goblet-squat": {
+    name: "Kettlebell goblet squat",
+    type: "weight",
+    sets: 3, repMin: 10, repMax: 12, rest: 75, inc: 4,
+    where: "Kettlebells",
+    weightNote: "Kettlebell weight in kg",
+    setup: [
+      "Hold a kettlebell by the sides of its handle, close against your chest, elbows pointing down.",
+      "Feet a little wider than shoulder-width, toes turned out slightly.",
+    ],
+    movement: [
+      "Sit down between your heels, keeping your chest up and the kettlebell close.",
+      "Go as low as you can while your heels stay down and your back stays flat.",
+      "Push through your whole foot to stand up.",
+    ],
+    mistakes: ["Heels lifting", "Chest dropping forward", "Knees caving in"],
+    tip: "Start with a light kettlebell and move up when 12 reps feel easy.",
+  },
+  elliptical: {
+    name: "Elliptical",
+    type: "cardio",
+    minutes: 15,
+    target: "15 min · steady, moderate effort",
+    where: "Elliptical",
+    setup: ["Step onto the pedals, hold the moving handles, and pick a resistance where you can talk in short sentences."],
+    movement: [
+      "Push and pull the handles while you stride, keeping your back tall.",
+      "Keep your whole foot on the pedal.",
+    ],
+    mistakes: ["Leaning on the handles", "Resistance so low your legs just spin"],
+  },
 };
 
-// A slot is one position in a workout. Slots with `alt` rotate week to week (by ISO week number),
-// and the user can swap manually.
+// A slot is one position in a workout. Slots with `alt` swap every 4-week block, counted from
+// the first workout (see blockInfo in store.js); the user can also swap by hand before logging.
+// Slot ids are unique across the app; never reuse an old id for a different exercise.
+export const BLOCK_WEEKS = 4;
+export const ORDER = ["A", "B", "C", "D"];
+
 export const WORKOUTS = {
   A: {
-    name: "Workout A",
-    focus: "Squat focus · about 60 min",
+    name: "Legs 1",
+    short: "L1",
+    focus: "Squat focus · abs · about 60 min",
     warmup: "warm-up",
     slots: [
-      { id: "a1", ex: "smith-squat" },
-      { id: "a2", ex: "seated-leg-curl" },
-      { id: "a3", ex: "leg-extension" },
-      { id: "a4", ex: "chest-press-machine", alt: "smith-bench-press" },
-      { id: "a5", ex: "cable-row" },
-      { id: "a6", ex: "knee-raise" },
-      { id: "a7", ex: "dead-hang" },
+      { id: "A1", ex: "smith-squat" },
+      { id: "A2", ex: "leg-press" },
+      { id: "A3", ex: "seated-leg-curl" },
+      { id: "A4", ex: "leg-extension" },
+      { id: "A5", ex: "hip-adductor" },
+      { id: "A6", ex: "knee-raise" },
+      { id: "A7", ex: "plank" },
     ],
-    finisher: { ex: "incline-walk", alt: "battle-ropes" },
+    finisher: { ex: "incline-walk", alt: "elliptical" },
   },
   B: {
-    name: "Workout B",
-    focus: "Hinge focus · about 65 min",
+    name: "Upper 1",
+    short: "U1",
+    focus: "Push focus · abs · about 60 min",
     warmup: "warm-up",
     slots: [
-      { id: "b1", ex: "db-rdl" },
-      { id: "b8", ex: "leg-press" },
-      { id: "b2", ex: "smith-split-squat", alt: "step-up" },
-      { id: "b3", ex: "hip-abductor", alt: "hip-adductor" },
-      { id: "b5", ex: "shoulder-press-machine" },
-      { id: "b6", ex: "lat-pulldown" },
-      { id: "b7", ex: "ab-crunch-machine" },
+      { id: "B1", ex: "chest-press-machine", alt: "smith-bench-press" },
+      { id: "B2", ex: "lat-pulldown" },
+      { id: "B3", ex: "shoulder-press-machine" },
+      { id: "B4", ex: "cable-row" },
+      { id: "B5", ex: "triceps-pushdown" },
+      { id: "B6", ex: "ab-crunch-machine" },
+      { id: "B7", ex: "dead-bug" },
     ],
     finisher: { ex: "rower-intervals", alt: "battle-ropes" },
+  },
+  C: {
+    name: "Legs 2",
+    short: "L2",
+    focus: "Hinge focus · abs · about 60 min",
+    warmup: "warm-up",
+    slots: [
+      { id: "C1", ex: "db-rdl" },
+      { id: "C2", ex: "smith-split-squat", alt: "step-up" },
+      { id: "C3", ex: "goblet-squat" },
+      { id: "C4", ex: "hip-abductor" },
+      { id: "C5", ex: "cable-crunch" },
+      { id: "C6", ex: "plank" },
+    ],
+    finisher: { ex: "elliptical", alt: "incline-walk" },
+  },
+  D: {
+    name: "Upper 2",
+    short: "U2",
+    focus: "Pull + arms · abs · about 60 min",
+    warmup: "warm-up",
+    slots: [
+      { id: "D1", ex: "incline-db-press" },
+      { id: "D2", ex: "one-arm-db-row" },
+      { id: "D3", ex: "lateral-raise" },
+      { id: "D4", ex: "face-pull" },
+      { id: "D5", ex: "ez-curl", alt: "hammer-curl" },
+      { id: "D6", ex: "knee-raise" },
+      { id: "D7", ex: "dead-hang" },
+    ],
+    finisher: { ex: "battle-ropes", alt: "rower-intervals" },
   },
 };
 
