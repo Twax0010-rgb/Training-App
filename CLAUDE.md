@@ -6,6 +6,17 @@ Single-user fitness tracker for one person (the repo owner). Installed as a home
 
 Fat loss while keeping muscle. Everything should serve one loop: train → log food → check the weight trend → rescan monthly. Body fat % is the headline number. Don't add features that don't serve that loop.
 
+## The gym
+
+Only plan exercises that use this equipment (from the owner's photos):
+
+- Cardio: treadmills, air rower (no weight stack, so not for strength work), spin bikes, elliptical.
+- Free weights: hex dumbbell rack, kettlebells, EZ curl bar, straight bars, plates, adjustable benches.
+- Smith machine. Functional rig with pull-up bars, a low step platform, landmine and battle ropes.
+- Cables: Encore dual adjustable pulley (functional trainer) and a Genesis Hi-Lo single pulley tower.
+- Machines: chest press, shoulder press, lat pulldown (with thigh pad), seated leg curl, leg extension, abdominal crunch, captain's chair, Impulse abductor/adductor (one machine), orange plate-loaded leg press.
+- Not yet identified: a plate-loaded machine with a red T-shaped arm. Ask before using it.
+
 ## Stack and layout
 
 Plain HTML/CSS/ES modules. **No build step, no npm dependencies, no frameworks.** It deploys straight from `main` to GitHub Pages.

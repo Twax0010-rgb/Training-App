@@ -3,7 +3,7 @@ import { EXERCISES, WORKOUTS, targetText } from "./data.js";
 import { lineChart } from "./charts.js";
 import { figureMarkup, startFigures } from "./figures.js";
 
-const VERSION = "1.1.0";
+const VERSION = "1.2.0";
 const view = document.getElementById("view");
 const ctaRoot = document.getElementById("cta-root");
 
@@ -79,7 +79,8 @@ function confirmDialog(title, body, okLabel = "OK", danger = false) {
 // ---------- session helpers ----------
 function sessionOrder(a) {
   const w = WORKOUTS[a.workout];
-  return [w.warmup, ...w.slots.map((s) => a.picks[s.id]), a.finisherEx];
+  // `|| defaultPick` keeps a workout started on an older version working after the plan changes.
+  return [w.warmup, ...w.slots.map((s) => a.picks[s.id] || S.defaultPick(s)), a.finisherEx];
 }
 
 function previewOrder(key) {

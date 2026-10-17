@@ -202,6 +202,25 @@ export const EXERCISES = {
     mistakes: ["Rounding your back", "Squatting down instead of pushing the hips back", "Letting the dumbbells drift away from your legs"],
     tip: "This one is about the hinge, not the weight. Go light until it feels natural.",
   },
+  "leg-press": {
+    name: "Leg press",
+    type: "weight",
+    sets: 3, repMin: 10, repMax: 12, rest: 90, inc: 10,
+    where: "Orange plate-loaded leg press",
+    weightNote: "Total plates loaded (add both sides)",
+    setup: [
+      "Sit with your back and hips flat against the pads.",
+      "Put your feet flat in the middle of the footplate, about shoulder-width apart.",
+      "Hold the side handles.",
+    ],
+    movement: [
+      "Push the plate away through your heels until your legs are almost straight. Don't lock your knees.",
+      "Lower it slowly until your knees are bent to about 90 degrees.",
+      "Keep your lower back and hips pressed into the seat the whole time.",
+    ],
+    mistakes: ["Locking your knees at the top", "Lowering so far that your hips lift off the seat", "Knees caving inward", "Bouncing at the bottom"],
+    tip: "Start with no plates, or a small plate on each side, to learn the movement. Add 10 kg in total only when every set hits 12 reps.",
+  },
   "smith-split-squat": {
     name: "Smith split squat",
     type: "weight",
@@ -243,7 +262,7 @@ export const EXERCISES = {
   "hip-abductor": {
     name: "Hip abductor",
     type: "weight",
-    sets: 2, repMin: 12, repMax: 15, rest: 60, inc: 5,
+    sets: 3, repMin: 12, repMax: 15, rest: 60, inc: 5,
     where: "Abductor/adductor machine",
     setup: [
       "Sit with your back against the pad.",
@@ -259,7 +278,7 @@ export const EXERCISES = {
   "hip-adductor": {
     name: "Hip adductor",
     type: "weight",
-    sets: 2, repMin: 12, repMax: 15, rest: 60, inc: 5,
+    sets: 3, repMin: 12, repMax: 15, rest: 60, inc: 5,
     where: "Abductor/adductor machine",
     setup: [
       "Same machine as the abductor: switch the pads to the inside of your knees.",
@@ -291,10 +310,10 @@ export const EXERCISES = {
     name: "Lat pulldown",
     type: "weight",
     sets: 3, repMin: 10, repMax: 12, rest: 75, inc: 5,
-    where: "Cable tower, top pulley",
+    where: "Lat pulldown machine",
     setup: [
-      "Set a pulley on the cable tower to the top and clip on a straight bar or rope.",
-      "Sit on the bench (or kneel) facing the tower, far enough back that your arms are straight overhead with tension on the cable.",
+      "Sit facing the machine and adjust the thigh pad so your thighs are locked snugly under it.",
+      "Stand up, grab the long bar a little wider than your shoulders, then sit back down with your arms straight overhead.",
     ],
     movement: [
       "Pull the bar down to your upper chest, driving your elbows down and back.",
@@ -368,13 +387,13 @@ export const WORKOUTS = {
   },
   B: {
     name: "Workout B",
-    focus: "Hinge focus · about 60 min",
+    focus: "Hinge focus · about 65 min",
     warmup: "warm-up",
     slots: [
       { id: "b1", ex: "db-rdl" },
+      { id: "b8", ex: "leg-press" },
       { id: "b2", ex: "smith-split-squat", alt: "step-up" },
-      { id: "b3", ex: "hip-abductor" },
-      { id: "b4", ex: "hip-adductor" },
+      { id: "b3", ex: "hip-abductor", alt: "hip-adductor" },
       { id: "b5", ex: "shoulder-press-machine" },
       { id: "b6", ex: "lat-pulldown" },
       { id: "b7", ex: "ab-crunch-machine" },

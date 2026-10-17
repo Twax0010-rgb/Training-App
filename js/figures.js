@@ -244,6 +244,23 @@ const FIG = {
     front: (j) => box(j.W1[0] - 8, j.W1[1] - 2, 16, 7, "mv-fill", 3),
   },
 
+  "leg-press": {
+    poses: [
+      { hip: [78, 108], torso: -128, legs: [{ ankle: [115, 90], bend: -1, foot: -62 }], arms: [{ hand: [84, 104], bend: 1 }] },
+      { hip: [78, 108], torso: -128, legs: [{ ankle: [134, 80], bend: -1, foot: -62 }], arms: [{ hand: [84, 104], bend: 1 }] },
+    ],
+    back: () => ground() + ln(69, 115, 40, 77, "eq", 7) + box(58, 113, 40, 6) + ln(80, 119, 80, G + 2) + ln(40, G + 2, 190, G + 2, "eq", 5) + ln(172, G + 2, 172, 114, "eq", 5),
+    front: (j) => {
+      // Footplate under the soles, on an arm that swings from a pivot near the floor.
+      const a = off(j.A1, j.T1, -4, 5);
+      const b = off(j.A1, j.T1, L.foot + 5, 5);
+      const mid = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+      const pivot = [172, 114];
+      const disc = [mid[0] + (pivot[0] - mid[0]) * 0.6, mid[1] + (pivot[1] - mid[1]) * 0.6];
+      return ln(mid[0], mid[1], pivot[0], pivot[1], "mv", 4) + ring(disc, 9, "eq") + ln(a[0], a[1], b[0], b[1], "mv", 6) + dot(pivot, 4, "eq-fill");
+    },
+  },
+
   "smith-split-squat": {
     poses: [
       { hip: [99, 76], torso: -88, legs: [{ ankle: [126, 135], bend: -1 }, { ankle: [72, 128], bend: -1, foot: 55 }], arms: [{ rel: [-4, -4], bend: -1 }] },
@@ -280,7 +297,9 @@ const FIG = {
       { hip: [86, 103], torso: -100, legs: [{ ankle: [118, 135], bend: -1 }], arms: [{ rel: [6, 0], bend: 1 }] },
     ],
     back: () => ground() + seat(58, 110, 107) + box(188, 2, 14, G, "eq-fill", 4) + ln(104, 2, 194, 2, "eq", 5) + ring([108, 4], 4, "eq"),
-    front: (j) => ln(108, 4, j.W1[0], j.W1[1], "cable") + ln(j.W1[0] - 6, j.W1[1], j.W1[0] + 6, j.W1[1], "mv", 5),
+    front: (j) =>
+      dot(off(j.P, j.K1, 24, -11), 6, "eq-fill") + // thigh pad
+      ln(108, 4, j.W1[0], j.W1[1], "cable") + ln(j.W1[0] - 6, j.W1[1], j.W1[0] + 6, j.W1[1], "mv", 5),
   },
 
   "ab-crunch-machine": {
