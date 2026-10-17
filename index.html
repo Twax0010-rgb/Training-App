@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0d0c">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Forge">
+  <meta name="description" content="Personal training, food and progress tracker.">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="css/app.css">
+  <title>Forge</title>
+</head>
+<body>
+  <main id="view" tabindex="-1"></main>
+
+  <div id="cta-root"></div>
+
+  <div class="timer" id="timer" aria-hidden="true">
+    <div class="timer-inner">
+      <div style="flex:1;min-width:0">
+        <div class="timer-label" id="timer-label">Rest</div>
+        <div class="timer-time" id="timer-time" role="timer" aria-live="off">1:30</div>
+      </div>
+      <button class="icon-btn" data-action="rest-add" data-sec="-15" aria-label="Take 15 seconds off">−15</button>
+      <button class="icon-btn" data-action="rest-add" data-sec="15" aria-label="Add 15 seconds">+15</button>
+      <button class="icon-btn" data-action="rest-skip" aria-label="Close rest timer">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div class="timer-fill" id="timer-fill"></div>
+    </div>
+  </div>
+
+  <nav class="tabbar" aria-label="Main">
+    <a href="#/today" data-tab="today">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6.5 7v10M3.5 9.5v5M17.5 7v10M20.5 9.5v5M6.5 12h11"/></svg>
+      Today
+    </a>
+    <a href="#/log" data-tab="log">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>
+      Log
+    </a>
+    <a href="#/progress" data-tab="progress">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4v16h16"/><path d="M8 15l3.5-4 3 2.5L20 7"/></svg>
+      Progress
+    </a>
+    <a href="#/plan" data-tab="plan">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
+      Plan
+    </a>
+  </nav>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <dialog id="confirm">
+    <h3 id="confirm-title"></h3>
+    <p id="confirm-body"></p>
+    <div class="btn-row">
+      <button class="btn secondary" value="cancel" id="confirm-cancel">Cancel</button>
+      <button class="btn" value="ok" id="confirm-ok">OK</button>
+    </div>
+  </dialog>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
