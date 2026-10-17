@@ -1,8 +1,9 @@
 import * as S from "./store.js";
 import { EXERCISES, WORKOUTS, targetText } from "./data.js";
 import { lineChart } from "./charts.js";
+import { figureMarkup, startFigures } from "./figures.js";
 
-const VERSION = "1.0.0";
+const VERSION = "1.1.0";
 const view = document.getElementById("view");
 const ctaRoot = document.getElementById("cta-root");
 
@@ -285,6 +286,7 @@ function render() {
 
 function afterRender() {
   document.querySelectorAll("[data-photo]").forEach(loadPhoto);
+  startFigures();
 }
 
 // ---------- TODAY ----------
@@ -396,8 +398,11 @@ function exerciseView(exId, from) {
       <p>${esc(ex.type === "cardio" ? ex.target : targetText(ex))}${ex.rest ? ` · rest ${ex.rest}s` : ""}</p>
     </header>`;
 
+  html += figureMarkup(exId, ex.name);
+
+  let photo = "";
   if (exId !== "warm-up") {
-    html += `<div class="photo" data-photo="${exId}">
+    photo = `<div class="photo" data-photo="${exId}">
       <label class="photo-empty" style="cursor:pointer">
         ${I.camera}
         <span><strong style="color:var(--text);display:block">Add a photo of this machine</strong>So you can spot it in your gym</span>
@@ -427,7 +432,7 @@ function exerciseView(exId, from) {
     cta = `<button class="btn" data-action="start" data-w="${key}" data-goto="${exId}">Start ${esc(WORKOUTS[key].name)}</button>`;
   }
 
-  html += guideBlock(ex, !inSession || !S.lastPerformance(exId));
+  html += photo + guideBlock(ex, !inSession || !S.lastPerformance(exId));
   return [html, cta];
 }
 
@@ -911,6 +916,10 @@ const actions = {
     timerEl.classList.remove("done");
     restFired = false;
     tickTimer();
+  },
+  "fig-toggle"(el) {
+    const wrap = el.closest(".fig-wrap");
+    wrap.classList.toggle("paused");
   },
   "rest-skip"() {
     hideTimer();

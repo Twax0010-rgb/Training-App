@@ -16,6 +16,7 @@ css/app.css           design tokens at the top, then components
 js/data.js            EXERCISES library + WORKOUTS (A/B) + DEFAULT_TARGETS
 js/store.js           state (localStorage "forge.v1"), session logic, progression, photos (IndexedDB)
 js/charts.js          dependency-free SVG line chart
+js/figures.js         animated exercise demos (original stick figures drawn in code)
 js/app.js             hash router, views (today/ex/log/progress/plan), event delegation
 sw.js                 offline cache (stale-while-revalidate)
 manifest.webmanifest  PWA manifest
@@ -52,6 +53,10 @@ If you change the shape, bump `v`, migrate in `load()` in `store.js`, and keep o
 - Slots with `alt` swap by ISO week parity (even = primary); the user can swap manually before logging.
 - Progression (`suggestion`): double progression. If every set at the top weight hit `repMax`, suggest `+inc`. Time holds add `incSec`; bodyweight reps add 1.
 - Weight conventions: Smith machine = plates added (empty bar = 0); dumbbells = kg per dumbbell; machines = the stack number. These are shown on screen via `weightNote`.
+
+## Exercise demos (`js/figures.js`)
+
+Every exercise has an original animated demo, drawn in code. Never swap in photos or images from the web; they aren't ours to ship. The figure is a side view facing right with fixed limb lengths (`L`). A pose is a spec: `hip`, `torso` angle, `legs` and `arms` (near first, far optional). Legs and hands can be given as IK targets (`ankle`, `hand`, or `rel` to the shoulder) so planted feet and hands never slide. Keyframe demos have `poses: [start, finish]`; continuous ones (walking, ropes, bike) use `at(t)`. `back(j)` and `front(j)` draw equipment; moving equipment uses the `mv` classes (accent orange). With reduced motion, start and finish are shown side by side. To check a change, render each demo at start, middle and finish and look at it at phone size.
 
 ## Design rules (from the design review)
 

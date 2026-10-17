@@ -116,11 +116,11 @@ export const EXERCISES = {
     name: "Seated cable row",
     type: "weight",
     sets: 3, repMin: 10, repMax: 12, rest: 75, inc: 5,
-    where: "Cable tower + bench",
+    where: "Hi-Lo pulley cable tower",
     setup: [
-      "On the cable tower, clip a V-handle (or a rope) onto one cable.",
-      "Set the pulley about level with your chest when you're seated.",
-      "Sit on the adjustable bench facing the tower, feet flat, and lean back slightly until your arms are straight with tension on the cable.",
+      "Use the tall single cable tower with the weight stack (the Hi-Lo pulley), not the rowing machine.",
+      "Clip a V-handle or rope onto the low pulley.",
+      "Put a bench far enough back that your arms are straight with tension on the cable, then sit facing the tower with your feet flat.",
     ],
     movement: [
       "Sit tall with your chest up.",
@@ -129,7 +129,7 @@ export const EXERCISES = {
       "Let your arms straighten slowly and your shoulders reach forward a little, without rounding your back.",
     ],
     mistakes: ["Leaning way back to yank the weight", "Shrugging your shoulders", "Rounding your back on the way forward"],
-    tip: "Pick a weight you can pull with your back, not by swinging your body.",
+    tip: "The rowing machine has no weight stack, so it can't get heavier as you get stronger. Use the cable tower so you can add weight over time, and pick a weight you can pull with your back, not by swinging.",
   },
   "knee-raise": {
     name: "Captain's chair knee raise",

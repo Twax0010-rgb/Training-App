@@ -15,6 +15,7 @@
   --good-ink: #05200e;
   --good-soft: rgba(74, 222, 128, 0.14);
   --danger: #ff7b7b;
+  --equip: #46524a;
 
   --f-xs: 13px;
   --f-sm: 15px;
@@ -254,6 +255,25 @@ body.timer-on .sticky-cta { bottom: calc(var(--tabbar-h) + var(--safe-b) + 72px)
 .guide ol, .guide ul { margin: 0; padding: 0 var(--s-4) var(--s-4) 40px; font-size: var(--f-sm); }
 .guide li + li { margin-top: var(--s-2); }
 .guide .tip { padding: 0 var(--s-4) var(--s-4); font-size: var(--f-sm); color: var(--text-2); margin: 0; }
+
+/* ---------- exercise demo figure ---------- */
+.fig-wrap { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); margin: var(--s-4) 0 var(--s-3); overflow: hidden; }
+.fig-btn { display: block; width: 100%; padding: var(--s-2); background: none; border: 0; }
+.fig { display: block; width: 100%; height: auto; max-height: 200px; }
+.fig-pair { display: grid; grid-template-columns: 1fr 1fr; }
+.fig-pair figure { margin: 0; padding: var(--s-2); }
+.fig-pair figcaption { text-align: center; font-size: var(--f-xs); color: var(--text-2); font-weight: 600; }
+.fig-caption { display: flex; justify-content: space-between; padding: 0 var(--s-4) var(--s-3); font-size: var(--f-xs); color: var(--text-2); font-weight: 600; }
+.fig .limb { stroke: var(--text); stroke-linecap: round; fill: none; }
+.fig .limb.far { stroke: var(--text-2); opacity: 0.55; }
+.fig .head, .fig .torso-fill { fill: var(--text); }
+.fig .ground { stroke: var(--line); stroke-width: 2; }
+.fig .eq { stroke: var(--equip); stroke-width: 4; stroke-linecap: round; fill: none; }
+.fig .eq-fill { fill: var(--equip); }
+.fig .mv { stroke: var(--accent); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+.fig .mv-fill { fill: var(--accent); }
+.fig .cable { stroke: var(--text-2); stroke-width: 1.5; opacity: 0.8; }
+.paused .fig { opacity: 0.85; }
 
 /* ---------- rest timer ---------- */
 .timer {
